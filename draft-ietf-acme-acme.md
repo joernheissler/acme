@@ -2955,6 +2955,72 @@ other than a certificate is found (i.e., if the string "-----BEGIN" is ever
 followed by anything other than "CERTIFICATE"), then the client MUST reject the
 file as invalid.
 
+--- back
+
+# Example requests
+
+The long quoted strings below are wrapped for display purposes, they don't
+contain any line breaks or other white space.  I.e. the HTTP body has exactly
+5 lines, each is terminated by CR LF. The Content-Length is accurate and
+the signatures are correct.
+
+Example account creation:
+
+~~~~~~~~~~
+POST /acme/new-account HTTP/1.1
+Host: example.com
+Content-Type: application/jose+json
+Content-Length: 576
+
+{
+    "payload": "eyJjb250YWN0IjpbIm1haWx0bzphZG1pbkBleGFtcGxlLm5ldCJdLCJ0
+                ZXJtc09mU2VydmljZUFncmVlZCI6dHJ1ZX0",
+    "protected": "eyJhbGciOiJFUzI1NiIsImp3ayI6eyJjcnYiOiJQLTI1NiIsImt0eS
+                  I6IkVDIiwieCI6ImY0T2tsNnZhZEFiS1pDN2NWd0tNc1RCd1Z0dDRm
+                  YlFDMWI1emJ3azFTUmciLCJ5IjoiblVtV0pmQVZpOG0wVy1rdEhnM3
+                  VZS3pJWS1vUFdRcFB4bHhCVTRVLURLbyJ9LCJub25jZSI6IkFtTmpu
+                  cUp2Vlc3Y3dEalJ5SlJXQldrYkZ2X1lneWQwU1o4bENOYXkzdTgiLC
+                  J1cmwiOiJodHRwczovL2V4YW1wbGUuY29tL2FjbWUvbmV3LWFjY291
+                  bnQifQ",
+    "signature": "RzIgePMgHF74on3-8-pzxliZRKl-a7ba_fCKqUS53RghGtj5hnhauJ
+                  OgPzY1BxPDPTKiEMVrjKXJroPuZWYybg"
+}
+~~~~~~~~~~
+
+Example key roll-over, including a nested JWS:
+
+~~~~~~~~~~
+POST /acme/key-change HTTP/1.1
+Host: example.com
+Content-Type: application/jose+json
+Content-Length: 1209
+
+{
+    "payload": "eyJwYXlsb2FkIjoiZXlKaFkyTnZkVzUwSWpvaWFIUjBjSE02THk5bGVH
+                RnRjR3hsTG1OdmJTOWhZMjFsTDJGalkzUXZNVEl6TkRVaUxDSnVaWGRM
+                WlhraU9uc2lZM0oySWpvaVVDMHlOVFlpTENKcmRIa2lPaUpGUXlJc0lu
+                Z2lPaUpmVVcxTmMxZG1RVVpCVGpBMWEwVnZYekI2WTNJM1IzWnpaMG94
+                VkVkSU1uVlJaR1IwV1RSS2NYTkZJaXdpZVNJNklrSk5Na0ZNU2tGTmFV
+                aHBkM0pWVUVOMWNUbHZUbFpNZFhCclowNUVSR0pLUTJaUVIzRXlVbDlW
+                YVVraWZYMCIsInByb3RlY3RlZCI6ImV5SmhiR2NpT2lKRlV6STFOaUlz
+                SW1wM2F5STZleUpqY25ZaU9pSlFMVEkxTmlJc0ltdDBlU0k2SWtWRElp
+                d2llQ0k2SWw5UmJVMXpWMlpCUmtGT01EVnJSVzlmTUhwamNqZEhkbk5u
+                U2pGVVIwZ3lkVkZrWkhSWk5FcHhjMFVpTENKNUlqb2lRazB5UVV4S1FV
+                MXBTR2wzY2xWUVEzVnhPVzlPVmt4MWNHdG5Ua1JFWWtwRFpsQkhjVEpT
+                WDFWcFNTSjlMQ0oxY213aU9pSm9kSFJ3Y3pvdkwyVjRZVzF3YkdVdVky
+                OXRMMkZqYldVdmEyVjVMV05vWVc1blpTSjkiLCJzaWduYXR1cmUiOiJn
+                LThkVUtHM1dRVTh5bWJZaXJWellkZTVPUEVyT3o1NkZmRWJlS2MyaDVV
+                d2R5VzJMeEd2VXlzcnRtd1pId1JyZTBRbFhteVlwMlk5SWN2R3FrREta
+                ZyJ9",
+    "protected": "eyJhbGciOiJFUzI1NiIsImtpZCI6Imh0dHBzOi8vZXhhbXBsZS5jb2
+                  0vYWNtZS9hY2N0LzEyMzQ1Iiwibm9uY2UiOiJKUFF0by1RX1RNVENs
+                  bmhHdjBERXA0ajk1b2RITGp6Qkp6LS1nR0lnZHBJIiwidXJsIjoiaH
+                  R0cHM6Ly9leGFtcGxlLmNvbS9hY21lL2tleS1jaGFuZ2UifQ",
+    "signature": "C7ZkQahUwcw1orQh5RPNtWVQmytnnYTnH4VgGxt2Yq807lSealPnqR
+                  jTBxvpfo_ceuaFj0G1fp-g_o4ZmjkFBg"
+}
+~~~~~~~~~~
+
 # Acknowledgements
 
 In addition to the editors listed on the front page, this document has benefited
